@@ -1,44 +1,35 @@
-import { Model, DataTypes } from "sequelize";
+import { pool } from "./index.js";
 
-export class Record extends Model {
-  id;
-  year;
-  title;
-  trackList;
-  discogs_url;
+export class Record {
+  constructor(id, year, artist, title, discogsUrl, tracklistId, opinionId) {
+    this.id = id;
+    this.year = year;
+    this.artist = artist;
+    this.title = title;
+    this.discogsUrl = discogsUrl;
+    this.tracklistId = tracklistId;
+    this.opinionId = opinionId;
+  }
 
-  static init(sequelize) {
-    return super.init(
-      {
-        id: {
-          type: DataTypes.INTEGER,
-          autoIncrement: true,
-          primaryKey: true,
-        },
-        year: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        artist: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-        title: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-        trackList: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-        discogs_url: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-      },
-      { sequelize }
-    );
+  static all() {
+    return pool.promise().query("SELECT * FROM record");
+  }
+
+  static findById(id) {
+    return pool.promise().query("SELECT * FROM record WHERE id = ?", [id]);
+  }
+
+  static create(record) {
+    return pool.query("INSERT INTO record SET ?", record);
+  }
+
+  static update(record) {
+    return pool
+      .promise()
+      .query("UPDATE record SET ? WHERE id = ?", [record, record.id]);
+  }
+
+  static delete(id) {
+    return pool.promise().query("DELETE FROM record WHERE id = ?", [id]);
   }
 }
-
-export default Record;

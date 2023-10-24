@@ -4,7 +4,8 @@ export async function getCollection() {
   const response = await fetch(url);
   const data = await response.json();
   let albums = data.releases.map((e) => {
-    return { id: e.id, title: e.basic_information.title };
+    let { id, title } = e.basic_information;
+    return { id, title };
   });
 
   return albums;
@@ -22,14 +23,23 @@ export async function getRelease(release) {
   const url = `https://api.discogs.com/releases/${release}`;
   const response = await fetch(url);
   const data = await response.json();
-  const info = {
+
+  const basic_info = {
     id: data.id,
     year: data.year,
     artist: data.artists_sort,
     title: data.title,
-    trackList: data.tracklist,
     discogs_url: data.uri,
   };
-
-  return info;
+  let songs = data.tracklist;
+  songs = songs.map((song) => {
+    let { position, title, duration } = song;
+    let newSong = { pos: position, title, duration, record_id: basic_info.id };
+    return newSong;
+  });
+  const trackList = {
+    record_id: data.id,
+    songs: songs,
+  };
+  return { basic_info, trackList };
 }
