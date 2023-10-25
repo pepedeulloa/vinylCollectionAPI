@@ -1,4 +1,6 @@
 import { pool } from "./index.js";
+import { Opinion } from "./opinion.model.js";
+import { Tracklist } from "./tracklist.model.js";
 
 export class Record {
   constructor(id, year, artist, title, discogsUrl, tracklistId, opinionId) {
@@ -20,7 +22,15 @@ export class Record {
   }
 
   static create(record) {
-    return pool.query("INSERT INTO record SET ?", record);
+    let rec = pool.query("INSERT INTO record SET ?", record);
+    let tracklist_id = Tracklist.findById(record.id);
+    let opinion_id = Opinion.findById(record.id);
+    let covers_id = Cover.findById(record.id);
+    let update = pool.query(
+      "UPDATE record SET tracklist_id = ?, opinion_id = ?, covers_id = ? WHERE id = ?;",
+      []
+    );
+    return;
   }
 
   static update(record) {
@@ -31,5 +41,8 @@ export class Record {
 
   static delete(id) {
     return pool.promise().query("DELETE FROM record WHERE id = ?", [id]);
+  }
+  static deleteAll() {
+    return pool.query("DELETE FROM record;");
   }
 }

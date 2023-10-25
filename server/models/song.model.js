@@ -1,13 +1,13 @@
 import { pool } from "./index.js";
 
 export class Song {
-  constructor(id, pos, duration, title, recordID, tracklistID) {
+  constructor(id, pos, duration, title, record_id, tracklist_id) {
     this.id = id;
     this.pos = pos;
     this.duration = duration;
     this.title = title;
-    this.tracklistID = tracklistID;
-    this.recordID = recordID;
+    this.tracklist_id = tracklist_id;
+    this.record_id = record_id;
   }
 
   static all() {
@@ -30,5 +30,9 @@ export class Song {
 
   static delete(id) {
     return pool.promise().query("DELETE FROM song WHERE id = ?", [id]);
+  }
+
+  static deleteAll() {
+    return pool.query("DELETE FROM song;");
   }
 }

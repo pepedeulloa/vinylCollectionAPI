@@ -10,8 +10,19 @@ export class Tracklist {
     return pool.promise().query("SELECT * FROM tracklist");
   }
 
-  static findById(id) {
-    return pool.query("SELECT * FROM tracklist WHERE record_id = ?", [id]);
+  static async findById(id) {
+    console.log(id);
+    try {
+      let query = await pool.query(
+        "SELECT * FROM tracklist WHERE record_id = ?",
+        [id]
+      );
+      let query_flat = query.flat();
+      let tracklist = query_flat[0];
+      return tracklist.id;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   static create(tracklist) {
@@ -29,5 +40,9 @@ export class Tracklist {
 
   static delete(id) {
     return pool.promise().query("DELETE FROM tracklist WHERE id = ?", [id]);
+  }
+
+  static deleteAll() {
+    return pool.query("DELETE FROM tracklist;");
   }
 }

@@ -28,4 +28,7 @@ export class Opinion {
   static delete(id) {
     return pool.promise().query("DELETE FROM opinion WHERE id = ?", [id]);
   }
+  static deleteAll() {
+    return pool.query("DELETE FROM opinion");
+  }
 }

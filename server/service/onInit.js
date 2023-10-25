@@ -47,6 +47,10 @@ const getData = async (callback) => {
 
 export const initialUpdate = async () => {
   //execDatabaseScripts();
+  await Record.deleteAll();
+  await Tracklist.deleteAll();
+  await Opinion.deleteAll();
+  await Song.deleteAll();
   await getData((data, error) => {
     if (error) {
       console.log("error", error);
@@ -56,13 +60,12 @@ export const initialUpdate = async () => {
         let { basic_info, trackList } = album;
         let { record_id, songs } = trackList;
         await Record.create(basic_info);
-        console.log("record_id", basic_info.id);
-        let tracklist_db = await Tracklist.findById(basic_info.id);
-        console.log(tracklist_db);
-        let tracklist_id = tracklist_db.id;
+        let tracklist_id = await Tracklist.findById(basic_info.id);
+        console.log(tracklist_id);
         songs.forEach(async (song) => {
           song.record_id = record_id;
           song.tracklist_id = tracklist_id;
+          console.log(song);
           await Song.create(song);
         });
       });

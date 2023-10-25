@@ -9,6 +9,7 @@ CREATE TABLE record(
     discogs_url text  not null,
     tracklist_id INT,
     opinion_id INT,
+    covers_id INT,
     PRIMARY KEY (id)
 );
 
@@ -35,6 +36,22 @@ CREATE TABLE opinion(
     primary key (id)
 );
 
+CREATE TABLE cover(
+	id int unique auto_increment,
+    record_id int not null,
+    front_cover longblob,
+    back_cover longblob,
+    vinyl_1 longblob,
+    vinyl_2 longblob,
+    vinyl_3 longblob,
+    vinyl_4 longblob,
+    extra_1 longblob,
+    extra_2 longblob,
+    extra_3 longblob,
+    extra_4 longblob,
+    primary key (id)
+);
+
 ALTER TABLE record 
 ADD CONSTRAINT fk_record_tracklist 
 FOREIGN KEY (tracklist_id) references tracklist(id) 
@@ -43,6 +60,11 @@ ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE record 
 ADD CONSTRAINT fk_record_opinion 
 FOREIGN KEY (opinion_id) references opinion(id) 
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE record 
+ADD CONSTRAINT fk_record_cover
+FOREIGN KEY (covers_id) references cover(id) 
 ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE tracklist 
@@ -63,4 +85,9 @@ ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE song 
 ADD CONSTRAINT fk_song_tracklist 
 FOREIGN KEY (tracklist_id) references tracklist(id) 
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE cover
+ADD CONSTRAINT fk_cover_record
+FOREIGN KEY (record_id) references record(id)
 ON DELETE CASCADE ON UPDATE CASCADE;
