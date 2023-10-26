@@ -11,11 +11,11 @@ export class Song {
   }
 
   static all() {
-    return pool.promise().query("SELECT * FROM song");
+    return pool.query("SELECT * FROM song");
   }
 
   static findById(id) {
-    return pool.promise().query("SELECT * FROM song WHERE id = ?", [id]);
+    return pool.query("SELECT * FROM song WHERE id = ?", [id]);
   }
 
   static create(song) {
@@ -23,13 +23,11 @@ export class Song {
   }
 
   static update(song) {
-    return pool
-      .promise()
-      .query("UPDATE song SET ? WHERE id = ?", [song, song.id]);
+    return pool.query("UPDATE song SET ? WHERE id = ?", [song, song.id]);
   }
 
   static delete(id) {
-    return pool.promise().query("DELETE FROM song WHERE id = ?", [id]);
+    return pool.query("DELETE FROM song WHERE id = ?", [id]);
   }
 
   static deleteAll() {

@@ -8,25 +8,32 @@ export class Cover {
   }
 
   static all() {
-    return pool.promise().query("SELECT * FROM cover");
+    return pool.query("SELECT * FROM cover");
   }
 
-  static findById(id) {
-    return pool.query("SELECT * FROM cover WHERE record_id = ?", [id]);
+  static async findById(id) {
+    try {
+      let query = await pool.query("SELECT * FROM cover WHERE record_id = ?", [
+        id,
+      ]);
+      let query_flat = query.flat();
+      let cover = query_flat[0];
+      return cover.id;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   static create(cover) {
-    return pool.promise().query("INSERT INTO cover SET ?", cover);
+    return pool.query("INSERT INTO cover SET ?", cover);
   }
 
   static update(cover) {
-    return pool
-      .promise()
-      .query("UPDATE cover SET ? WHERE id = ?", [cover, cover.id]);
+    return pool.query("UPDATE cover SET ? WHERE id = ?", [cover, cover.id]);
   }
 
   static delete(id) {
-    return pool.promise().query("DELETE FROM cover WHERE id = ?", [id]);
+    return pool.query("DELETE FROM cover WHERE id = ?", [id]);
   }
   static deleteAll() {
     return pool.query("DELETE FROM cover");

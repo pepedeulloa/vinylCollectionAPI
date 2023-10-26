@@ -27,30 +27,15 @@ const getData = async (callback) => {
   }, 2500);
 };
 
-// const execDatabaseScripts = () => {
-//   /*
-//     const cwd = process.cwd();
-//     const records_sql = fs.readFileSync(`${cwd}/database/records_db.sql`,"utf-8");
-//     const triggers_sql = fs.readFileSync(`${cwd}/database/triggers_records_db.sql`,"utf-8");
-//   */
-
-//   let results = [,];
-//   try {
-//     results[0] = pool.query(records_sql);
-//     console.log("Tablas creadas !", results[0]);
-//     //results[1] = pool.query(triggers_sql);
-//     //console.log("Triggers creados !", results[1]);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-export const initialUpdate = async () => {
-  //execDatabaseScripts();
+const deleteAllData = async () => {
   await Record.deleteAll();
   await Tracklist.deleteAll();
   await Opinion.deleteAll();
   await Song.deleteAll();
+};
+
+export const initialUpdate = async () => {
+  await deleteAllData();
   await getData((data, error) => {
     if (error) {
       console.log("error", error);
@@ -61,11 +46,9 @@ export const initialUpdate = async () => {
         let { record_id, songs } = trackList;
         await Record.create(basic_info);
         let tracklist_id = await Tracklist.findById(basic_info.id);
-        console.log(tracklist_id);
         songs.forEach(async (song) => {
           song.record_id = record_id;
           song.tracklist_id = tracklist_id;
-          console.log(song);
           await Song.create(song);
         });
       });

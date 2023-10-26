@@ -8,25 +8,36 @@ export class Opinion {
   }
 
   static all() {
-    return pool.promise().query("SELECT * FROM opinion");
+    return pool.query("SELECT * FROM opinion");
   }
 
-  static findById(id) {
-    return pool.promise().query("SELECT * FROM opinion WHERE id = ?", [id]);
+  static async findById(id) {
+    try {
+      let query = await pool.query(
+        "SELECT * FROM opinion WHERE record_id = ?",
+        [id]
+      );
+      let query_flat = query.flat();
+      let opinion = query_flat[0];
+      return opinion.id;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   static create(opinion) {
-    return pool.promise().query("INSERT INTO opinion SET ?", opinion);
+    return pool.query("INSERT INTO opinion SET ?", opinion);
   }
 
   static update(opinion) {
-    return pool
-      .promise()
-      .query("UPDATE opinion SET ? WHERE id = ?", [opinion, opinion.id]);
+    return pool.query("UPDATE opinion SET ? WHERE id = ?", [
+      opinion,
+      opinion.id,
+    ]);
   }
 
   static delete(id) {
-    return pool.promise().query("DELETE FROM opinion WHERE id = ?", [id]);
+    return pool.query("DELETE FROM opinion WHERE id = ?", [id]);
   }
   static deleteAll() {
     return pool.query("DELETE FROM opinion");
