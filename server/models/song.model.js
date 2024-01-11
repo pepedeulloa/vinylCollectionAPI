@@ -1,36 +1,32 @@
-import { pool } from "./index.js";
+import { db } from './index.js';
 
 export class Song {
-  constructor(id, pos, duration, title, record_id, tracklist_id) {
-    this.id = id;
-    this.pos = pos;
-    this.duration = duration;
-    this.title = title;
-    this.tracklist_id = tracklist_id;
-    this.record_id = record_id;
-  }
+	constructor(id, pos, duration, title, record_id) {
+		this.id = id;
+		this.pos = pos;
+		this.duration = duration;
+		this.title = title;
+		this.record_id = record_id;
+	}
 
-  static all() {
-    return pool.query("SELECT * FROM song");
-  }
+	static all() {
+		return db.execute('SELECT * FROM song');
+	}
 
-  static findById(id) {
-    return pool.query("SELECT * FROM song WHERE id = ?", [id]);
-  }
+	static findById(id) {
+		return db.execute({ sql: 'SELECT * FROM song WHERE id = :id', args: { id } });
+	}
 
-  static create(song) {
-    return pool.query("INSERT INTO song SET ?", song);
-  }
+	static create({ id, pos, title, duration, record_id }) {
+		console.log(id, pos, title, duration, record_id);
+		return db.execute({ sql: 'INSERT INTO song (id, pos, title, duration, record_id) VALUES (:id, :pos, :title, :duration, :record_id);', args: { id, pos, title, duration, record_id } });
+	}
 
-  static update(song) {
-    return pool.query("UPDATE song SET ? WHERE id = ?", [song, song.id]);
-  }
+	static delete(id) {
+		return db.execute({ sql: 'DELETE FROM song WHERE id = :id', args: { id } });
+	}
 
-  static delete(id) {
-    return pool.query("DELETE FROM song WHERE id = ?", [id]);
-  }
-
-  static deleteAll() {
-    return pool.query("DELETE FROM song;");
-  }
+	static deleteAll() {
+		return db.execute('DELETE FROM song;');
+	}
 }

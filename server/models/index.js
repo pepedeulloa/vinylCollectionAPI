@@ -1,13 +1,12 @@
-import dotenv from "dotenv";
-import mysql from "mysql2";
+import dotenv from 'dotenv';
+import { createClient } from '@libsql/client';
+
+import process from 'process';
 
 dotenv.config();
 
-export const pool = mysql
-  .createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB,
-  })
-  .promise();
+export const db = createClient({
+	url: process.env.DB_URL,
+	authToken: process.env.DB_TOKEN,
+});
+

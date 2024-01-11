@@ -1,10 +1,16 @@
-import express from "express";
-import { Record } from "../models/record.model.js";
+import express from 'express';
+import { Record } from '../models/record.model.js';
 
-const router = express.Router();
+const recordsRouter = express.Router();
 
-router.get("/", async (req, res) => {
-  const records = await Record.findAll();
+recordsRouter.get('/', async (req, res) => {
+	const records = await Record.findAll();
 
-  res.send(records);
+	res.send(records);
 });
+
+recordsRouter.post('/:id/opinion', async (req, res) => {
+	res.status(200).json({ msg: 'ok' });
+});
+
+export { recordsRouter };

@@ -1,6 +1,6 @@
-USE records_db;
+USE records-db;
 
-DROP TABLE IF EXISTS records_db.opinion, records_db.record, records_db.song, records_db.tracklist;
+DROP TABLE IF EXISTS records-db.opinion, records-db.record, records-db.song, records-db.tracklist;
 CREATE TABLE record(
 	id int unique,
     year int not null,
@@ -39,16 +39,7 @@ CREATE TABLE opinion(
 CREATE TABLE cover(
 	id int unique auto_increment,
     record_id int not null,
-    front_cover longblob,
-    back_cover longblob,
-    vinyl_1 longblob,
-    vinyl_2 longblob,
-    vinyl_3 longblob,
-    vinyl_4 longblob,
-    extra_1 longblob,
-    extra_2 longblob,
-    extra_3 longblob,
-    extra_4 longblob,
+    cover varchar(255),
     primary key (id)
 );
 

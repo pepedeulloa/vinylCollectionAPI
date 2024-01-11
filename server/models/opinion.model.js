@@ -1,45 +1,48 @@
-import { pool } from "./index.js";
+import { db } from './index.js';
 
 export class Opinion {
-  constructor(id, text, recordID) {
-    this.id = id;
-    this.text = text;
-    this.recordID = recordID;
-  }
+	constructor(text, recordID) {
+		this.text = text;
+		this.recordID = recordID;
+	}
 
-  static all() {
-    return pool.query("SELECT * FROM opinion");
-  }
+	static all() {
+		return db.execute('SELECT * FROM opinion;');
+	}
 
-  static async findById(id) {
-    try {
-      let query = await pool.query(
-        "SELECT * FROM opinion WHERE record_id = ?",
-        [id]
-      );
-      let query_flat = query.flat();
-      let opinion = query_flat[0];
-      return opinion.id;
-    } catch (error) {
-      console.log(error);
-    }
-  }
+	static async findById(id) {
+		try {
+			let query = await db.execute({
+				sql: 'SELECT * FROM opinion WHERE record_id = :id',
+				args: { id }
+			});
+			let query_flat = query.flat();
+			let opinion = query_flat[0];
+			return opinion.id;
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
-  static create(opinion) {
-    return pool.query("INSERT INTO opinion SET ?", opinion);
-  }
+	static create(opinion) {
+		return db.execute({ sql: 'INSERT INTO opinion SET :opinion', args: { opinion } });
+	}
 
-  static update(opinion) {
-    return pool.query("UPDATE opinion SET ? WHERE id = ?", [
-      opinion,
-      opinion.id,
-    ]);
-  }
+	static update(opinion) {
+		const id = opinion.id;
+		return db.execute({
+			sql: 'UPDATE opinion SET ? WHERE id = ?',
+			args: {
+				opinion,
+				id,
+			}
+		});
+	}
 
-  static delete(id) {
-    return pool.query("DELETE FROM opinion WHERE id = ?", [id]);
-  }
-  static deleteAll() {
-    return pool.query("DELETE FROM opinion");
-  }
+	static delete(id) {
+		return db.execute({ sql: 'DELETE FROM opinion WHERE id = ?', args: { id } });
+	}
+	static deleteAll() {
+		return db.execute('DELETE FROM opinion;');
+	}
 }

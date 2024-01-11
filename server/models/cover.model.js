@@ -1,41 +1,42 @@
-import { pool } from "./index.js";
+import { db } from './index.js';
 
 export class Cover {
-  constructor(id, text, recordID) {
-    this.id = id;
-    this.text = text;
-    this.recordID = recordID;
-  }
+	constructor(id, url, recordID) {
+		this.url = url;
+		this.recordID = recordID;
+	}
 
-  static all() {
-    return pool.query("SELECT * FROM cover");
-  }
+	static all() {
+		return db.execute('SELECT * FROM cover');
+	}
 
-  static async findById(id) {
-    try {
-      let query = await pool.query("SELECT * FROM cover WHERE record_id = ?", [
-        id,
-      ]);
-      let query_flat = query.flat();
-      let cover = query_flat[0];
-      return cover.id;
-    } catch (error) {
-      console.log(error);
-    }
-  }
+	static async findById(id) {
+		try {
+			let query = await db.execute({
+				sql: 'SELECT * FROM cover WHERE record_id = :id',
+				args: { id },
+			});
+			let query_flat = query.flat();
+			let cover = query_flat[0];
+			return cover.id;
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
-  static create(cover) {
-    return pool.query("INSERT INTO cover SET ?", cover);
-  }
+	static create(cover) {
+		return db.execute({ sql: 'INSERT INTO cover SET :cover', args: { cover } });
+	}
 
-  static update(cover) {
-    return pool.query("UPDATE cover SET ? WHERE id = ?", [cover, cover.id]);
-  }
+	static update(cover) {
+		const id = cover.id;
+		return db.execute({ sql: 'UPDATE cover SET :cover WHERE id = :id', args: { cover, id } });
+	}
 
-  static delete(id) {
-    return pool.query("DELETE FROM cover WHERE id = ?", [id]);
-  }
-  static deleteAll() {
-    return pool.query("DELETE FROM cover");
-  }
+	static delete(id) {
+		return db.execute({ sql: 'DELETE FROM cover WHERE id = :id', args: { id } });
+	}
+	static deleteAll() {
+		return db.execute('DELETE FROM cover');
+	}
 }
