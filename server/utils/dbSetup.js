@@ -83,23 +83,21 @@ const createTables = async () => {
 	);
 
 	await db.execute(`
-			CREATE TABLE opinion(
-				id int unique,
-							record_id int not null,
-							text TEXT,
-							primary key (id),
-							FOREIGN KEY (record_id) references record(id) ON DELETE CASCADE ON UPDATE CASCADE
-			);
+			CREATE TABLE opinion (                                                              
+				record_id INT NOT NULL,                                                               
+				text TEXT,                                                                            
+				PRIMARY KEY (record_id),                                                              
+				FOREIGN KEY (record_id) REFERENCES record(id) ON DELETE CASCADE ON UPDATE CASCADE     
+				);
 	`);
 
 	await db.execute(`
-			CREATE TABLE cover(
-				id int unique,
-							record_id int not null,
-							cover varchar(255),
-							primary key (id),
-							FOREIGN KEY (record_id) references record(id) ON DELETE CASCADE ON UPDATE CASCADE
-			);
+			CREATE TABLE cover (                                                                
+				record_id INT NOT NULL,                                                               
+				cover VARCHAR(255),                                                                   
+				PRIMARY KEY (record_id),                                                              
+				FOREIGN KEY (record_id) REFERENCES record(id) ON DELETE CASCADE ON UPDATE CASCADE     
+				);
 			`
 	);
 };

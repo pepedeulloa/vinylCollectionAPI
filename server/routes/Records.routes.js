@@ -64,39 +64,4 @@ recordsRouter.get('/:id', async (req, res) => {
 	res.status(200).json(record);
 });
 
-/**
-	* @swagger
-	* tags:
-	*   name: Records
-	*   description: API for managing records and opinions
-	* /api/records/{id}:
-	*   post:
-	*     summary: Add an opinion for a record.
-	*     tags: [Records]
-	*     parameters:
-	*       - in: path
-	*         name: id
-	*         required: true
-	*         schema:
-	*           type: integer
-	*         description: ID of the record to add an opinion.
-	*     responses:
-	*       '200':
-	*         description: All records.
-	*         content:
-	*           application/json:
-	*             example:
-	*               message: All records in the database
-	*       '500':
-	*         description: Server error
-	*         content:
-	*           application/json:
-	*             example:
-	*               error: Some server error
-	*/
-
-recordsRouter.post('/:id', async (req, res) => {
-	res.status(200).json({ msg: 'ok' });
-});
-
 export { recordsRouter };

@@ -28,13 +28,12 @@ export class Opinion {
 		return db.execute({ sql: 'INSERT INTO opinion SET :opinion', args: { opinion } });
 	}
 
-	static update(opinion) {
-		const id = opinion.id;
+	static update(record_id, opinion) {
 		return db.execute({
-			sql: 'UPDATE opinion SET ? WHERE id = ?',
+			sql: 'UPDATE opinion SET text = :opinion WHERE record_id = :record_id',
 			args: {
 				opinion,
-				id,
+				record_id
 			}
 		});
 	}
