@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllRecords, getRecord } from '../service/record.js';
+import { getAllRecords, getCountRecords, getRecord } from '../service/record.js';
 
 const recordsRouter = express.Router();
 
@@ -8,7 +8,7 @@ const recordsRouter = express.Router();
 	* tags:
 	*   name: Records
 	*   description: The records collection managing API
-	* /api/records/:
+	* /api/records/all:
 	*   get:
 	*     summary: Get all records in the database
 	*     tags: [Records]
@@ -22,7 +22,7 @@ const recordsRouter = express.Router();
 	*         description: Some server error
 	*
 	*/
-recordsRouter.get('/', async (req, res) => {
+recordsRouter.get('/all', async (req, res) => {
 	const records = await getAllRecords();
 
 	res.status(200).json(records);
@@ -33,7 +33,7 @@ recordsRouter.get('/', async (req, res) => {
 	* tags:
 	*   name: Records
 	*   description: API for managing records collection
-	* /api/records/{id}:
+	* /api/records/record/{id}:
 	*   get:
 	*     summary: Retrieve a record by ID
 	*     tags: [Records]
@@ -59,9 +59,34 @@ recordsRouter.get('/', async (req, res) => {
 	*               error: Some server error
 	*/
 
-recordsRouter.get('/:id', async (req, res) => {
+recordsRouter.get('/record/:id', async (req, res) => {
 	const record = await getRecord(req.params.id);
 	res.status(200).json(record);
+});
+
+/**
+	* @swagger
+	* tags:
+	*   name: Records
+	*   description: The records collection managing API
+	* /api/records/count:
+	*   get:
+	*     summary: Get the count of records in the database
+	*     tags: [Records]
+	*     responses:
+	*       200:
+	*         description: Number of records in the database.
+	*         content:
+	*           application/json:
+	*             Number of records in the database.
+	*       500:
+	*         description: Some server error
+	*
+	*/
+recordsRouter.get('/count', async (req, res) => {
+	const records = await getCountRecords();
+
+	res.status(200).json(records);
 });
 
 export { recordsRouter };

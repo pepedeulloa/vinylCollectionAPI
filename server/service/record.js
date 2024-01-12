@@ -29,3 +29,10 @@ export const getRecord = async (id) => {
 
 	return record;
 };
+
+export const getCountRecords = async () => {
+	const response = await Record.count();
+	let count = response.rows[0][0];
+
+	return count;
+};

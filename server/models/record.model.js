@@ -17,6 +17,13 @@ export class Record {
 		return db.execute({ sql: 'SELECT * FROM record WHERE id = :id', args: { id } });
 	}
 
+	static async count() {
+		return await db.execute({
+			sql: 'SELECT COUNT(*) FROM record',
+			args: {},
+		});
+	}
+
 	static async create({ id, year, artist, title, discogs_url }) {
 		return await db.execute({ sql: 'INSERT INTO record (id, year, artist, title, discogs_url) VALUES (:id, :year, :artist, :title, :discogs_url)', args: { id, year, artist, title, discogs_url } });
 	}
