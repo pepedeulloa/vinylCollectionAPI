@@ -59,9 +59,14 @@ recordsRouter.get('/all', async (req, res) => {
 	*               error: Some server error
 	*/
 
-recordsRouter.get('/record/:id', async (req, res) => {
-	const record = await getRecord(req.params.id);
-	res.status(200).json(record);
+recordsRouter.get('/record/:id', async (req, res, next) => {
+	try {
+		const record = await getRecord(req.params.id);
+		res.status(200).json(record);
+	} catch (error) {
+		next(error);
+	}
+
 });
 
 /**
@@ -83,10 +88,15 @@ recordsRouter.get('/record/:id', async (req, res) => {
 	*         description: Some server error
 	*
 	*/
-recordsRouter.get('/count', async (req, res) => {
-	const records = await getCountRecords();
+recordsRouter.get('/count', async (req, res, next) => {
+	try {
+		const records = await getCountRecords();
+		res.status(200).json(records);
+	} catch (error) {
+		console.log('route');
+		next(error);
+	}
 
-	res.status(200).json(records);
 });
 
 export { recordsRouter };

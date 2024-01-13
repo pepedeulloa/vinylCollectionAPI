@@ -9,12 +9,12 @@ export class Record {
 		this.discogsUrl = discogsUrl;
 	}
 
-	static findAll() {
-		return db.execute('SELECT * FROM record');
+	static async findAll() {
+		return await db.execute('SELECT * FROM record');
 	}
 
-	static findById(id) {
-		return db.execute({ sql: 'SELECT * FROM record WHERE id = :id', args: { id } });
+	static async findById(id) {
+		return await db.execute({ sql: 'SELECT * FROM record WHERE id = :id', args: { id } });
 	}
 
 	static async count() {

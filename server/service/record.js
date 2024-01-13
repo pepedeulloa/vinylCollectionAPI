@@ -1,4 +1,5 @@
 import { Record } from '../models/record.model.js';
+import { IdentifierNotValidError, ResourceNotFoundError } from '../utils/errors.js';
 
 export const getAllRecords = async () => {
 	const response = await Record.findAll();
@@ -17,7 +18,16 @@ export const getAllRecords = async () => {
 };
 
 export const getRecord = async (id) => {
-	let response = await Record.findById(parseInt(id));
+
+	const record_id = parseInt(id);
+
+	if (isNaN(record_id)) throw new IdentifierNotValidError;
+
+	let response = await Record.findById(record_id);
+
+	if (response.rows.length === 0 || !response) {
+		throw new ResourceNotFoundError;
+	}
 
 	let record = {
 		id: response.rows[0][0],
