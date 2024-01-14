@@ -26,27 +26,29 @@ const opinionsRouter = express.Router();
 	*           application/json:
 	*             example:
 	*               message: Opinion added successfully.
-	*       '500':
-	*         description: Server error.
+	*       '400':
+	*         description: Bad request. The provided identifier is not valid or the data is invalid.
 	*         content:
 	*           application/json:
 	*             example:
-	*               error: Some server error
+	*               error: Invalid identifier or data.
+	*       '404':
+	*         description: Resource not found.
+	*         content:
+	*           application/json:
+	*             example:
+	*               error: Resource not found.
+	*       '500':
+	*         description: Some server error
 	*/
 
-opinionsRouter.post('api/opinion/:id', async (req, res) => {
-	const newOpinion = req.body;
-
+opinionsRouter.put('/:id', async (req, res, next) => {
 	try {
-		const result = await postOpinion(req.params.id, newOpinion);
-
-		console.log(result);
+		await postOpinion(req.params.id, req.body.opinion);
 		res.status(200).json({ msg: 'Opinion updated succesfully.' });
 	} catch (error) {
-		console.log(error);
-		res.status(400).json({ msg: 'Bad request.' });
+		next(error);
 	}
-
 });
 
 export { opinionsRouter };

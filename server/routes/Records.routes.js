@@ -83,11 +83,24 @@ recordsRouter.get('/record/:id', async (req, res, next) => {
 	*         description: Number of records in the database.
 	*         content:
 	*           application/json:
-	*             Number of records in the database.
+	*             example:
+	*               count: 42  # Replace with the actual count value
+	*       400:
+	*         description: Bad request. The provided identifier is not valid or the data is invalid.
+	*         content:
+	*           application/json:
+	*             example:
+	*               error: Invalid identifier or data.
+	*       404:
+	*         description: Resource not found.
+	*         content:
+	*           application/json:
+	*             example:
+	*               error: Resource not found.
 	*       500:
 	*         description: Some server error
-	*
 	*/
+
 recordsRouter.get('/count', async (req, res, next) => {
 	try {
 		const records = await getCountRecords();

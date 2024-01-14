@@ -14,6 +14,9 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.json());
+
+
 app.disable('verbose errors');
 
 swaggerDoc(app);

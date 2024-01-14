@@ -28,8 +28,8 @@ export class Opinion {
 		return db.execute({ sql: 'INSERT INTO opinion SET :opinion', args: { opinion } });
 	}
 
-	static update(record_id, opinion) {
-		return db.execute({
+	static async update(record_id, opinion) {
+		return await db.execute({
 			sql: 'UPDATE opinion SET text = :opinion WHERE record_id = :record_id',
 			args: {
 				opinion,

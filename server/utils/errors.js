@@ -11,3 +11,10 @@ export class IdentifierNotValidError extends Error {
 		this.name = 'IdentifierNotValidError';
 	}
 }
+
+export class NotValidDataError extends Error {
+	constructor(message = 'Received data not valid, must be text') {
+		super(message);
+		this.name = 'NotValidDataError';
+	}
+}
