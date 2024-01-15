@@ -62,14 +62,6 @@ const createTables = async () => {
 	);
 	`);
 
-	/* 	await db.execute(
-			`CREATE TABLE tracklist(
-				record_id int PRIMARY KEY, 
-				primary key(id),
-				FOREIGN KEY (record_id) references record(id) ON DELETE CASCADE ON UPDATE CASCADE
-				); `
-		); */
-
 	await db.execute(`
 			CREATE TABLE song(
 				id text unique,

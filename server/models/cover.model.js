@@ -24,13 +24,43 @@ export class Cover {
 		}
 	}
 
+	static async getAllUrls() {
+		try {
+			return await db.execute('SELECT * FROM url_views;');
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	static create(cover) {
 		return db.execute({ sql: 'INSERT INTO cover SET :cover', args: { cover } });
 	}
 
-	static update(cover) {
-		const id = cover.id;
-		return db.execute({ sql: 'UPDATE cover SET :cover WHERE id = :id', args: { cover, id } });
+	static update(id, urls) {
+		const [cover1, cover2, cover3, cover4, cover5, cover6, cover7, cover8] = urls;
+		return db.execute({
+			sql: `UPDATE cover 
+		SET 
+						cover1 = :cover1,
+						cover2 = :cover2,
+						cover3 = :cover3,
+						cover4 = :cover4,
+						cover5 = :cover5,
+						cover6 = :cover6,
+						cover7 = :cover7,
+						cover8 = :cover8
+		WHERE record_id = :id;`, args: {
+				cover1,
+				cover2,
+				cover3,
+				cover4,
+				cover5,
+				cover6,
+				cover7,
+				cover8,
+				id
+			}
+		});
 	}
 
 	static delete(id) {
