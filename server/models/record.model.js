@@ -13,6 +13,10 @@ export class Record {
 		return await db.execute('SELECT * FROM record');
 	}
 
+	static async findAllWithCovers() {
+		return await db.execute('SELECT * FROM record_cover_view;');
+	}
+
 	static async findById(id) {
 		return await db.execute({ sql: 'SELECT * FROM record WHERE id = :id', args: { id } });
 	}

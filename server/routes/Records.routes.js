@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllRecords, getCountRecords, getRecord } from '../service/record.js';
+import { getCountRecords, getLandingData, getRecord } from '../service/record.js';
 
 const recordsRouter = express.Router();
 
@@ -7,10 +7,10 @@ const recordsRouter = express.Router();
 	* @swagger
 	* tags:
 	*   name: Records
-	*   description: The records collection managing API
+	*   description: All records in the database.
 	* /api/records/all:
 	*   get:
-	*     summary: Get all records in the database
+	*     summary: Retrieve all records in the database
 	*     tags: [Records]
 	*     responses:
 	*       200:
@@ -23,7 +23,7 @@ const recordsRouter = express.Router();
 	*
 	*/
 recordsRouter.get('/all', async (req, res) => {
-	const records = await getAllRecords();
+	const records = await getLandingData();
 
 	res.status(200).json(records);
 });

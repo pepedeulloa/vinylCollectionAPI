@@ -17,6 +17,21 @@ export const getAllRecords = async () => {
 	return records;
 };
 
+export const getLandingData = async () => {
+	const response = await Record.findAllWithCovers();
+
+	let records = response.rows.map((r) => {
+		return {
+			id: r[0],
+			title: r[1],
+			artist: r[2],
+			url: r[3]
+		};
+	});
+
+	return records;
+};
+
 export const getRecord = async (id) => {
 
 	const record_id = parseInt(id);
