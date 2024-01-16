@@ -12,13 +12,10 @@ export class Cover {
 
 	static async findById(id) {
 		try {
-			let query = await db.execute({
+			return await db.execute({
 				sql: 'SELECT * FROM cover WHERE record_id = :id',
 				args: { id },
 			});
-			let query_flat = query.flat();
-			let cover = query_flat[0];
-			return cover.id;
 		} catch (error) {
 			console.log(error);
 		}
