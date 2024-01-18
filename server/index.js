@@ -6,6 +6,7 @@ import { swaggerDoc } from './middlewares/swagger.js';
 import { recordsRouter } from './routes/Records.routes.js';
 import { opinionsRouter } from './routes/Opinion.routes.js';
 import { coversRouter } from './routes/Cover.routes.js';
+import { songsRouter } from './routes/Songs.routes.js';
 
 
 // middlewares
@@ -25,6 +26,7 @@ swaggerDoc(app);
 app.use('/api/records', recordsRouter);
 app.use('/api/opinion', opinionsRouter);
 app.use('/api/covers', coversRouter);
+app.use('/api/songs', songsRouter);
 
 app.use('/', (_req, res) => {
 	res.send('<h1>Benvidx a API da miña colección de vinilos</h1>');

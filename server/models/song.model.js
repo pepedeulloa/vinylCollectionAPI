@@ -14,7 +14,7 @@ export class Song {
 	}
 
 	static findById(id) {
-		return db.execute({ sql: 'SELECT * FROM song WHERE id = :id', args: { id } });
+		return db.execute({ sql: 'SELECT * FROM song WHERE record_id = :id', args: { id } });
 	}
 
 	static create({ id, pos, title, duration, record_id }) {
