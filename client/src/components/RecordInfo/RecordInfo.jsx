@@ -1,7 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-const RecordInfo = (props) => {
+const RecordInfo = ({ record }) => {
   return (
     <div>
       <h2>

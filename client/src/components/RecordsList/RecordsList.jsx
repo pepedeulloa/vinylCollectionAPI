@@ -1,33 +1,24 @@
 import React from "react";
-import PropTypes from "prop-types";
+import "./RecordsList.css";
 
 import RecordsListItem from "../RecordsListItem/RecordsListItem";
 
-const RecordsList = (props) => {
-  const collection = [
-    {
-      id: 1,
-      title: "Nevermind",
-      artist: "Nirvana",
-      imageUrl: "",
-    },
-  ];
+const RecordsList = ({ records }) => {
 
-  const recordsList = collection.map((record) => {
+
+  const recordsList = records.map((record) => (
     <li key={record.id}>
-      <RecordsListItem record />
-    </li>;
-  });
+      <RecordsListItem record={record} />
+    </li>
+  ));
 
   return (
     <div>
-      <ul>{records}</ul>
+      <ul>{recordsList}</ul>
     </div>
   );
 };
 
-RecordsList.propTypes = {
-  recordsCo,
-};
+
 
 export default RecordsList;

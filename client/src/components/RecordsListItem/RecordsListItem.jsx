@@ -1,20 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-const RecordsListItem = (props) => {
+const RecordsListItem = ({ record }) => {
   return (
     <div>
-      <img src={record.imageUrl} alt={record.title} />
       <p>
-        <b>{record.title}</b>
-        {record.artist}
+        {record.artist} - <b>{record.title}</b>
       </p>
     </div>
   );
-};
-
-RecordsListItem.propTypes = {
-  record,
 };
 
 export default RecordsListItem;
