@@ -14,7 +14,7 @@ export class Record {
 	}
 
 	static async findAllWithCovers() {
-		return await db.execute('SELECT * FROM record_cover_view;');
+		return await db.execute('SELECT * FROM record_cover_view ORDER BY RANDOM();');
 	}
 
 	static async findById(id) {
