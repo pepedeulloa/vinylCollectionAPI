@@ -15,4 +15,4 @@ const options = {
 
 const specs = swaggerJSDoc(options);
 
-export const swaggerDoc = (app) => app.use('/docs/', serve, setup(specs));
+export const swaggerDoc = (app) => app.use('/docs', serve, setup(specs));

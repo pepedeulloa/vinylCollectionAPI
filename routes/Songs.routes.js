@@ -10,7 +10,7 @@ const songsRouter = express.Router();
 	*   description: API for managing records collection
 	* /api/songs/{id}:
 	*   get:
-	*     summary: Retrieve the covers of a record by ID
+	*     summary: Retrieve all the songs of a record by ID
 	*     tags: [Songs]
 	*     parameters:
 	*       - in: path
