@@ -30,6 +30,11 @@ app.use(cors());
 app.disable('verbose errors');
 
 swaggerDoc(app);
+app.use('/api/ctl',(req, res) => {
+	let date = new Date();
+	console.log(date.toString() + " - ctl req - " + req.ip);
+	res.status(200).send();
+})
 app.use('/api/records', recordsRouter);
 app.use('/api/opinion', opinionsRouter);
 app.use('/api/covers', coversRouter);
