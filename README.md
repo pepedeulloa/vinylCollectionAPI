@@ -21,9 +21,10 @@ Experience the app first-hand by visiting the live demo [here](https://pepedeull
 
 For detailed information on request and response formats, please refer to the [API Documentation](https://vinylcollectionapi.onrender.com/docs/).
 
-## Future Updates
+## Upcoming Features
 
 - **Pagination**: Implement pagination for large record collections.
+- **Enhanced Discogs Metrics**: Access additional information about each record, including detailed metrics from Discogs.
 - **Logging and Error Handling**: Improve logging and error handling mechanisms.
 
 Your feedback and contributions are welcome as we continue to enhance and improve the Vinyl Collection API!
