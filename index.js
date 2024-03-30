@@ -6,6 +6,8 @@ import process from 'process';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
+import { limiter } from './middlewares/limiter.js';
+
 import { swaggerDoc } from './middlewares/swagger.js';
 import { recordsRouter } from './routes/Records.routes.js';
 import { opinionsRouter } from './routes/Opinion.routes.js';
@@ -30,6 +32,10 @@ app.use(cors());
 app.disable('verbose errors');
 
 swaggerDoc(app);
+
+
+app.use("/api", limiter);
+
 app.use('/api/ctl',(req, res) => {
 	let date = new Date();
 	console.log(date.toString() + " - ctl req - " + req.ip);
